@@ -4,3 +4,8 @@ transformers
 scipy
 scikit-image
 opencv-python-headless
+mercantile
+mapbox_vector_tile
+vt2geojson
+pillow
+requests

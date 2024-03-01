@@ -16,7 +16,7 @@ RUN sed -i 's/nullok_secure/nullok/' /etc/pam.d/common-auth
 
 USER user
 
-RUN pip install -U transformers scipy scikit-image opencv-python-headless
+RUN pip install -U transformers scipy scikit-image opencv-python-headless mercantile mapbox_vector_tile vt2geojson pillow requests
 
 WORKDIR /work
 

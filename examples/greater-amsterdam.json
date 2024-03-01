@@ -1,0 +1,10 @@
+{
+  "bounding_box": {
+    "west": 4.7149,
+    "south": 52.2818,
+    "east": 5.1220,
+    "north": 52.4284
+  },
+  "tile_cache_dir": "ams-tiles",
+  "seqdir": "ams-seqs"
+}

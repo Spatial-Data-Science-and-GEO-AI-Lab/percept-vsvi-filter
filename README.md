@@ -13,6 +13,99 @@ Instead of installing Python3 and the necessary packages on your system, you can
 
 # Commands
 
+## `mapillary_jpg_download.py`
+
+Script to download all mapillary street view imagery within a given latitude/longitude boundary 'box'.
+
+This script is provided as-is. The usage of this script, compliance with Mapillary licencing and acceptable use terms, as well as any Internet service provider terms, is entirely your responsibility.
+
+### Configuration
+
+This program can be run entirely from the command-line, or it can be configured using a token file and/or a configuration JSON file.
+
+The following information must be provided in one form or another:
+* Mapillary API access token
+	- (from Developer section of Mapillary, after you Register an Application, copy the 'Client Token' field)
+* Tile cache directory
+* Image sequence download directory
+* Geographic bounding box of imagery to download: west (longitude), south (latitude), east (longitude), north (latitude)
+
+The command-line reference can be found below.
+
+#### Token file
+
+The API token is a secret that should not be shared in code repositories or any
+publicly-accessible archives. It is probably not a good idea to normally
+provide the token on the command-line because most command shells will save
+your command history in a file, so you may want to clear that history (e.g. in
+bash use the command `history -c`) if you do use the `--token` argument.
+
+If you choose to put your API token into a file then please put it entirely by
+itself into a single, simple text file. You can specify the `--token-file`
+argument on the command-line to feed it to the program, or simply use the
+default name `token.txt` and the program will find it in the current directory.
+
+Do not commit the token file to a repository (e.g. you may want to add the
+filename to your `.gitignore` if you are using git).
+
+#### Configuration file
+
+Tile cache directory, image sequence directory and geographic bounding box can
+be provided in a JSON file that should look like this:
+
+    {
+            "bounding_box": {
+                    "west": 4.7149,
+                    "south": 52.2818,
+                    "east": 5.1220,
+                    "north": 52.4284
+            },
+            "tile_cache_dir": "<tile directory>",
+            "seqdir": "<sequence directory>"
+    }
+
+An example may be found in `examples/greater-amsterdam.json`.
+
+The `-c` command-line argument can be used to feed the configuration file to
+the program.
+
+`tile_cache_dir` and `seqdir` are important because they are the directores to which this script will download the Mapillary tiles GeoJSON files and the actual street view imagery sequences, respectively.
+
+### Examples
+
+* Assuming your API token is saved in `token.txt`:
+  - `./mapillary_jpg_download.py -c examples/greater-amsterdam.json`
+* Assuming your API token is saved in `mytoken.txt`:
+  - `./mapillary_jpg_download.py -c examples/greater-amsterdam.json --token-file mytoken.txt`
+* Fully command-line:
+  - `./mapillary_jpg_download.py --token 'MLY...' --tile-cache-dir tiles --seqdir seqs --west 4.7 --south 52.2 --east 5.12 --north 52.4`
+* Reduce number of retries to 6, will stop running if free disk space falls below 50GB, and will store failed-to-download image IDs in a file:
+  - `./mapillary_jpg_download.py -c examples/greater-amsterdam.json --num-retries 6 --required-disk-space 50 --failed-imgid-file list-of-failed-imgids.txt`
+
+### Usage
+
+    mapillary_jpg_download.py [--configfile FILENAME] [options]
+
+    options:
+      -h, --help               show this help message and exit
+      --configfile FILENAME, --config FILENAME, -c FILENAME
+                               Configuration file to process
+      --quiet, -q              Run in quiet mode
+      --overwrite, -O          Overwrite any existing output file
+      --tile-cache-dir DIR     Directory in which to store the Mapillary GeoJSON tiles cache
+      --tile-list-file FILE    Work on the listed tiles only, identified by tile cache filename, 1 per line
+      --imgid-file FILE        Only download the Mapillary image IDs found in this file (1 ID listed per line)
+      --failed-imgid-file      Record failed-to-download Mapillary image IDs into this file (for later use with --imgid-file)
+      --seqdir DIR             Directory in which to store street view imagery sequences (a large amount of image data)
+      --token TOKEN            Mapillary API token (see Developers help for Mapillary)
+      --token-file FILE        Alternatively, read the token from this file (with the token written on a single line)
+      --required-disk-space    Will stop run less than this number in gigabytes is available. (default: 100)
+      --num-retries NUM        Number of times to retry if there is a network failure. (default: 8)
+      --west LON               Western boundary (longitude)
+      --south LAT              Southern boundary (latitude)
+      --east LON               Eastern boundary (longitude)
+      --north LAT              Northern boundary (latitude)
+
 ## `make_tiles_db.py`
 
 Take the GeoJSON tiles database (obtained from Mapillary) and condense it into a pickled database. Not strictly necessary, but makes further processing commands much faster on large imagery collections.
@@ -21,6 +114,15 @@ Take the GeoJSON tiles database (obtained from Mapillary) and condense it into a
 
 * Produce a pickled database file named `my-tiles-database.pkl` from the directory `my-tiles-directory/`:
   - `./make_tiles_db.py -o my-tiles-database.pkl my-tiles-directory/`
+
+### Usage
+
+    make_tiles_db.py -o FILENAME DIRECTORY
+
+    required:
+      DIRECTORY                             Directory containing Mapillary GeoJSON tiles cache
+      -o FILENAME, --output FILENAME        Write pickled database into FILENAME
+      
 
 ## `torch_segm_images.py`
 

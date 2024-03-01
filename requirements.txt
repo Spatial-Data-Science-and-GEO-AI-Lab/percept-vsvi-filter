@@ -1,0 +1,6 @@
+numpy
+torch
+transformers
+scipy
+scikit-image
+opencv-python-headless

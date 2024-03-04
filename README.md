@@ -126,7 +126,7 @@ Take the GeoJSON tiles database (obtained from Mapillary) and condense it into a
 
 ## `torch_segm_images.py`
 
-Run semantic segmentation on images using PyTorch and output the result into accompanying '.npz' files for further processing.
+Run semantic segmentation on images using PyTorch and output the result into accompanying '.npz' files for further processing. If you wish to change the model (option `--modelname`) used for [Mask2Former](https://github.com/facebookresearch/Mask2Former/tree/main) semantic segmentation then [find it on HuggingFace](https://huggingface.co/models?search=mask2former); the default is `facebook/mask2former-swin-large-cityscapes-semantic` and for most users that will be fine.
 
 ### Examples
 
@@ -165,7 +165,7 @@ Run semantic segmentation on images using PyTorch and output the result into acc
                             Interpolation method (NEAREST (0), LANCZOS (1), BILINEAR (2), BICUBIC (3), BOX (4) or HAMMING (5)).
       --overwrite, -O       Overwrite any existing output file
       --dry-run             Do not actually write any output file
-      --modelname MODEL     Use a specified model (from gluoncv.model_zoo)
+      --modelname MODEL     Use a specified model (from https://huggingface.co/models?search=mask2former)
       --gpu [N], -G [N]     Use GPU (optionally specify which one)
       --exclusion-pattern REGEX, -E REGEX
                             Regex to indicate which files should be excluded from processing.

@@ -24,7 +24,7 @@ import torch
 from transformers import AutoImageProcessor, Mask2FormerForUniversalSegmentation
 from PIL import Image, ImageFile
 
-parser = argparse.ArgumentParser(prog='torch_segm_images.py', description='Run semantic segmentation')
+parser = argparse.ArgumentParser(prog='torch_segm_images.py', description='Run semantic segmentation using a Mask2Former model from HuggingFace (see https://huggingface.co/models?search=mask2former)')
 parser.add_argument('paths', metavar='PATH', nargs='+', help='Filenames or directories to process as input (either images or filelists, see -e and -F)')
 parser.add_argument('--verbose', '-v', action='store_true', default=False, help='Run in verbose mode')
 parser.add_argument('--filelist', '-F', action='store_true', default=False, help='Supplied paths are actually a list of image filenames, one per line, to process (does not work with -r)')
@@ -37,7 +37,7 @@ parser.add_argument('--scaledown-factor', '-s', default=4, type=float, help='Ima
 parser.add_argument('--scaledown-interp', default=3, type=int, help='Interpolation method (NEAREST (0), LANCZOS (1), BILINEAR (2), BICUBIC (3), BOX (4) or HAMMING (5)).')
 parser.add_argument('--overwrite', '-O', action='store_true', default=False, help='Overwrite any existing output file')
 parser.add_argument('--dry-run', action='store_true', default=False, help='Do not actually write any output file')
-parser.add_argument('--modelname', metavar='MODEL', help='Use a specified model (from gluoncv.model_zoo)',default="facebook/mask2former-swin-large-cityscapes-semantic")
+parser.add_argument('--modelname', metavar='MODEL', help='Use a specified model (from https://huggingface.co/models?search=mask2former)',default="facebook/mask2former-swin-large-cityscapes-semantic")
 parser.add_argument('--gpu', '-G', metavar='N', nargs='?', default=None, const=True, help='Use GPU (optionally specify which one)')
 parser.add_argument('--exclusion-pattern', '-E', metavar='REGEX', default='.*(npz|mask|out|_x[0-9]+).*', help='Regex to indicate which files should be excluded from processing.')
 

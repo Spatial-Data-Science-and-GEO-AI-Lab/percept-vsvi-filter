@@ -12,6 +12,7 @@ parser.add_argument('--verbose', '-v', action='store_true', default=False, help=
 parser.add_argument('--contrast-threshold', '-C', metavar='NUMBER', default=0.35, type=float, help='Minimum contrast')
 parser.add_argument('--tone-mapping-threshold', '-H', metavar='NUMBER', default=0.35, type=float, help='Minimum contrast')
 parser.add_argument('--tone-mapping-floor', metavar='NUMBER', default=0.8, type=float, help='Tone mapping floor')
+parser.add_argument('--disable-road-check', action='store_true', default=False, help='Do not filter out images that lack a road')
 
 out_extensions = ['out']
 
@@ -47,7 +48,7 @@ def main():
                         centres = list(map(int,filter(lambda x: x, line[len(centres_tag):closebracketpos].strip().split(' '))))
                     
         v = contrast + max(0, tone_mapping - args.tone_mapping_floor)
-        accept = v > args.contrast_threshold and len(centres) == 1
+        accept = v > args.contrast_threshold and (args.disable_road_check or len(centres) == 1)
         vlog(f'imgid={imgid} contrast={contrast} Tone-mapping={tms} road centres={centres} v={v} accept?: {accept}')
         if accept: outfp.write(f'{imgid}\n')
 

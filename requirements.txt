@@ -9,3 +9,4 @@ mapbox_vector_tile
 vt2geojson
 pillow
 requests
+imagesize

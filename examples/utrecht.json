@@ -1,0 +1,10 @@
+{
+  "bounding_box": {
+    "west": 5.033,
+    "south": 52.047,
+    "east": 5.188,
+    "north": 52.137
+  },
+  "tile_cache_dir": "utr-tiles",
+  "seqdir": "utr-seqs"
+}

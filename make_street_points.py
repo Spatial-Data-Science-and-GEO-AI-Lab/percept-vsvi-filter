@@ -61,7 +61,6 @@ def generate_street_points(bbox, spacing=50, srid=28992):
     edges = ox.graph_to_gdfs(G, nodes=False).to_crs(srid)
     
     points = []
-    #import pdb;pdb.set_trace()
     for _, row in edges.iterrows():
         line = row['geometry']
         # Calculate number of points needed

@@ -10,3 +10,4 @@ vt2geojson
 pillow
 requests
 imagesize
+torchvision
